@@ -15,18 +15,14 @@ services:
   redis:
     image: redis:alpine
     container_name: nginx-nc-redis
-    labels:
-      - dockerDash.name=redis
-      - dockerDash.parents=Nexcloud
-      - dockerDash.icon=si/SiRedis
     restart: always
     networks:
       - nextcloud_nginx
 
 
   app:
-    build: ./smb
-    image: nextcloud:fpm-alpine
+#    build: ./smb
+    image: gpopesc/nc-nginx-app
     container_name: nginx-nc-fpm
     restart: always
     labels:
@@ -48,16 +44,17 @@ services:
 
 
   web:
-    build: ./web
-    restart: always
+#    build: ./web
+    image: gpopesc/nc-nginx-web
     container_name: nginx-nc-web
+    restart: always
     labels:
       - "com.centurylinklabs.watchtower.enable=false"
     ports:
       - 5080:80
     volumes:
       - /volume1/nextcloud:/var/www/html:ro
-      - /volume1/nextcloud/data/nginx.conf:/etc/nginx/nginx.conf
+#      - /volume1/nextcloud/data/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - app
     networks:
