@@ -106,7 +106,7 @@ VOLUME /var/www/html
 
 
 ENV NEXTCLOUD_VERSION 22.0.0
-
+FROM nextcloud:fpm-alpine
 RUN set -ex; \
     apk add --no-cache --virtual .fetch-deps \
         bzip2 \
