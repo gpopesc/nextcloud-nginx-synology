@@ -9,6 +9,8 @@ RUN set -ex; \
         samba-client \
         supervisor \
 #       libreoffice \
+        tiny-vim \
+        sudo \
     ;
 
 RUN set -ex; \
