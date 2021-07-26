@@ -14,7 +14,7 @@ RUN set -ex; \
 # install the PHP extensions we need
 # see https://docs.nextcloud.com/server/stable/admin_manual/installation/source_installation.html
 RUN set -ex; \
-    \
+    \ 
     apk add --no-cache --virtual .build-deps \
         $PHPIZE_DEPS \
         autoconf \
@@ -33,7 +33,25 @@ RUN set -ex; \
         imagemagick-dev \
         libwebp-dev \
         gmp-dev \
+        smbclient \
+        procps \
+        ffmpeg \
     ; \
+    \
+RUN set -ex; \
+    \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libbz2-dev \
+        libc-client-dev \
+        libkrb5-dev \
+        libsmbclient-dev \
+    ; \
+    \
+    docker-php-ext-install \
+        bz2; \
+    pecl install smbclient; \
+    docker-php-ext-enable smbclient; \
     \
     docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp; \
     docker-php-ext-configure ldap; \
