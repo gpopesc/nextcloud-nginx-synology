@@ -38,21 +38,6 @@ RUN set -ex; \
         ffmpeg \
     ; \
     \
-RUN set -ex; \
-    \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-        libbz2-dev \
-        libc-client-dev \
-        libkrb5-dev \
-        libsmbclient-dev \
-    ; \
-    \
-    docker-php-ext-install \
-        bz2; \
-    pecl install smbclient; \
-    docker-php-ext-enable smbclient; \
-    \
     docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp; \
     docker-php-ext-configure ldap; \
     docker-php-ext-install -j "$(nproc)" \
@@ -126,7 +111,23 @@ RUN set -ex; \
     apk add --no-cache --virtual .fetch-deps \
         bzip2 \
         gnupg \
+        smbclient \
+        procps \
+        ffmpeg \
     ; \
+RUN set -ex; \
+    \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libbz2-dev \
+        libc-client-dev \
+        libkrb5-dev \
+        libsmbclient-dev \
+    ; \
+    docker-php-ext-install \
+        bz2; \
+    pecl install smbclient; \
+    docker-php-ext-enable smbclient; \
     \
     curl -fsSL -o nextcloud.tar.bz2 \
         "https://download.nextcloud.com/server/releases/nextcloud-${NEXTCLOUD_VERSION}.tar.bz2"; \
