@@ -29,3 +29,10 @@ jobs:
           file: ./smb/Dockerfile
           push: true
           tags: gpopesc/nc-nginx-app
+      -
+        name: Build and push2
+        id: docker_build2
+        uses: docker/build-push-action@v2
+         file: ./web/Dockerfile
+          push: true
+          tags: gpopesc/nc-nginx-web
