@@ -27,8 +27,6 @@ services:
     image: gpopesc/nc-nginx-app
     container_name: nginx-nc-app
     restart: always
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
     volumes:
       - /volume1/nextcloud:/var/www/html
     environment:
@@ -50,8 +48,6 @@ services:
     image: gpopesc/nc-nginx-web
     container_name: nginx-nc-web
     restart: always
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
     ports:
       - 5080:80
     volumes:
@@ -67,8 +63,6 @@ services:
     image: nextcloud:fpm-alpine
     container_name: nginx-nc-cron
     restart: always
-    labels:
-      - "com.centurylinklabs.watchtower.enable=false"
     volumes:
       - /volume1/nextcloud:/var/www/html
     entrypoint: /cron.sh
